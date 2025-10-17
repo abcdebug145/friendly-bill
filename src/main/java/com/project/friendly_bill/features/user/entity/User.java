@@ -1,7 +1,12 @@
 package com.project.friendly_bill.features.user.entity;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.project.friendly_bill.features.expense.entity.Expense;
 import com.project.friendly_bill.features.expense.entity.ExpenseSplit;
@@ -20,29 +25,33 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "users")
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(nullable = false, length = 50)
+    String displayName;
+
+    @Column(nullable = false, length = 50, unique = true)
     String username;
 
-    @Column(nullable = true, length = 100, unique = true)
+    @Column(nullable = true, length = 30, unique = true)
     String email;
-
-    @Column(nullable = true, length = 15)
-    String phone;
 
     String avatar;
     String qrPayment;
@@ -88,4 +97,14 @@ public class User {
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Message> sentMessages;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override public boolean isAccountNonExpired() { return true; }
+    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled() { return isActive; }
 }
