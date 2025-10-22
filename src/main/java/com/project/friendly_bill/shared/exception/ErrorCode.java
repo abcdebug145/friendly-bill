@@ -29,7 +29,16 @@ public enum ErrorCode {
     OAUTH2_USER_INFO_NOT_FOUND(1006, "OAuth2 user info not found"),
     PROVIDER_ID_ALREADY_IN_USE(1007, "Provider ID already in use"),
     INVALID_QR_PAYMENT(1008, "Invalid QR payment format"),
-    USERNAME_ALREADY_TAKEN(1009, "Username already taken")
+    USERNAME_ALREADY_TAKEN(1009, "Username already taken"),
+    
+    // Group Errors
+    GROUP_NOT_FOUND(2001, "Group not found"),
+    GROUP_NAME_ALREADY_EXISTS(2002, "Group name already exists")
+    ,
+    // Group Member Errors
+    MEMBER_NOT_FOUND(2101, "Group member not found"),
+    ALREADY_A_MEMBER(2102, "User is already a member of the group"),
+    MEMBER_REQUEST_ALREADY_EXISTS(2103, "Join request already exists")
     ;
 
     int code;

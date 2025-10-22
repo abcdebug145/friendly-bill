@@ -1,5 +1,7 @@
 package com.project.friendly_bill.shared.utils;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +19,7 @@ public class CacheUtils {
     }
 
     public void putToCache(String key, Object value, Long ttl) {
-        redisTemplate.opsForValue().set(key, value, ttl);
+        redisTemplate.opsForValue().set(key, value, ttl, TimeUnit.MILLISECONDS);
     }
 
     public Object getFromCache(String key) {

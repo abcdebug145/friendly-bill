@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     String displayName;
 
     @Column(nullable = false, length = 50, unique = true)

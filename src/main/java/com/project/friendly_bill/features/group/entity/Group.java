@@ -36,6 +36,7 @@ public class Group {
 
     String name;
     String description;
+    String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "created_by")
